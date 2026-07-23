@@ -1,0 +1,43 @@
+{
+  "site": {
+    "title": "KyushuDave",
+    "base_url": "https://kyushudave.com/",
+    "base_path": "/",
+    "trailing_slash": true,
+    "favicon": "/images/favicon.png",
+    "logo": "",
+    "logo_width": "150",
+    "logo_height": "30",
+    "logo_text": "KyushuDave"
+  },
+
+  "settings": {
+    "search": true,
+    "sticky_header": true,
+    "pagination": 6,
+    "summary_length": 200,
+    "default_layout": "gridRight"
+  },
+
+  "params": {
+    "contact_form_action": "#",
+    "copyright": "All Rights Reserved | [KyushuDave](https://kyushudave.com/)"
+  },
+
+  "navigation_button": {
+    "enable": true,
+    "label": "Get Started",
+    "link": "https://github.com/teamosis-products/logbook-astro"
+  },
+
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+
+  "metadata": {
+    "meta_author": "KyushuDave",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "KyushuDave, a blog about Kyushu, Japan."
+  }
+}

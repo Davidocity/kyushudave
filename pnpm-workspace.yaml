@@ -1,0 +1,14 @@
+packages:
+  - "."
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  workerd: true
+
+minimumReleaseAgeExclude:
+  - "@astrojs/mdx@6.0.2"
+  - "astro@6.4.4"
+  - eslint@10.6.0
+  - prettier@3.8.5
+  - swiper@14.0.0

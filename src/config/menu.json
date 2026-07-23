@@ -1,0 +1,60 @@
+{
+  "main": [
+    {
+      "name": "Homepage",
+      "url": "/"
+    },
+    {
+      "name": "About",
+      "url": "/about/"
+    },
+    {
+      "name": "Categories",
+      "url": "/categories/"
+    },
+    {
+      "name": "Contact",
+      "url": "/contact/"
+    }
+  ],
+  "footer": [
+    {
+      "name": "Quick Links",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "About",
+          "url": "/about"
+        },
+        {
+          "name": "Contact",
+          "url": "/contact"
+        },
+        {
+          "name": "Privacy Policy",
+          "url": "/privacy-policy"
+        },
+        {
+          "name": "Terms Conditions",
+          "url": "/terms-conditions"
+        }
+      ]
+    },
+    {
+      "name": "Social Links",
+      "url": "",
+      "hasChildren": true,
+      "children": [
+        {
+          "name": "Instagram",
+          "url": "/#"
+        },
+        {
+          "name": "YouTube",
+          "url": "/#"
+        }
+      ]
+    }
+  ]
+}
