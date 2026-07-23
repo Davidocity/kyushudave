@@ -1,6 +1,7 @@
 {
-  "name": "logbook-astro",
-  "compatibility_date": "2026-03-01",
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kyushudave",
+  "compatibility_date": "2026-07-23",
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
