@@ -1,6 +1,6 @@
 {
   "site": {
-    "title": "KyushuDave",
+    "title": "Kyushu Dave",
     "base_url": "https://kyushudave.com/",
     "base_path": "/",
     "trailing_slash": true,
@@ -8,7 +8,7 @@
     "logo": "",
     "logo_width": "150",
     "logo_height": "30",
-    "logo_text": "KyushuDave"
+    "logo_text": "Kyushu Dave"
   },
 
   "settings": {
@@ -36,7 +36,7 @@
   },
 
   "metadata": {
-    "meta_author": "KyushuDave",
+    "meta_author": "Kyushu Dave",
     "meta_image": "/images/og-image.png",
     "meta_description": "KyushuDave, a blog about Kyushu, Japan."
   }

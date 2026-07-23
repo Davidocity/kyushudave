@@ -2,7 +2,6 @@
 import config from "@/config/config.json";
 import dateFormat from "@/lib/utils/dateFormat";
 import { humanize, plainify, slugify } from "@/lib/utils/textConverter";
-import { FaUser } from "react-icons/fa6";
 import ImageMod from "../ImageMod.astro";
 
 const { summary_length }: { summary_length: number } = config.settings;
@@ -23,10 +22,6 @@ const { id, body } = post?.post;
     <a class="post-title" href={`/post/${id}`} set:html={title} />
   </h3>
   <ul class="post-meta">
-    <li class="flex justify-center items-center">
-      <FaUser className="mr-2" />
-      <a href={`/author`} set:html={author} class="meta-link" />
-    </li>
     <li>
       Date :{" "}
       <span class="meta-link">

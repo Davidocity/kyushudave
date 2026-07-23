@@ -10,7 +10,7 @@ const about = await getListPage("about", "-index");
 const buildDrafts = process.argv.includes("--buildDrafts");
 if (!buildDrafts && about.data.draft) return Astro.redirect("/404");
 const { Content } = await render(about);
-const { title, description, meta_title, image, social } = about.data;
+const { title, description, meta_title, image, image_caption, social } = about.data;
 ---
 
 <Base
@@ -31,18 +31,26 @@ const { title, description, meta_title, image, social } = about.data;
             />
           </div>
 
-          {
-            image && (
-              <ImageMod
-                class="mx-auto w-full mb-6 rounded-lg"
-                src={image}
-                width={1116}
-                height={450}
-                alt={title}
-                format="webp"
-              />
-            )
-          }
+            {
+              image && (
+                <figure class="mb-6">
+                  <ImageMod
+                    class="mx-auto w-full rounded-sm"
+                    src={image}
+                    width={2048}
+                    height={1461}
+                    alt={title}
+                    format="webp"
+                  />
+
+                  {image_caption && (
+                    <figcaption class="mt-2 text-center text-sm italic text-text-light">
+                      {image_caption}
+                    </figcaption>
+                  )}
+                </figure>
+              )
+            }
           <div class="content">
             <Content />
           </div>

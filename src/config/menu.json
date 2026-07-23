@@ -1,7 +1,7 @@
 {
   "main": [
     {
-      "name": "Homepage",
+      "name": "Home",
       "url": "/"
     },
     {
@@ -11,10 +11,6 @@
     {
       "name": "Categories",
       "url": "/categories/"
-    },
-    {
-      "name": "Contact",
-      "url": "/contact/"
     }
   ],
   "footer": [
@@ -32,12 +28,8 @@
           "url": "/contact"
         },
         {
-          "name": "Privacy Policy",
+          "name": "Privacy Policy and Terms of Use",
           "url": "/privacy-policy"
-        },
-        {
-          "name": "Terms Conditions",
-          "url": "/terms-conditions"
         }
       ]
     },

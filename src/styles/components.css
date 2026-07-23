@@ -139,7 +139,7 @@ a {
   @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
   @apply prose-img:max-w-full prose-img:rounded-lg;
   @apply prose-hr:border-border prose-hr:my-4;
-  @apply prose-p:text-[14px] prose-p:text-text prose-p:mt-0;
+  @apply prose-p:text-[18px] prose-p:text-text prose-p:mt-0;
 
   blockquote {
     @apply rounded border-0 bg-light m-0 pr-5 pl-16 py-5 relative;
@@ -349,7 +349,7 @@ a {
   h4,
   h5,
   h6 {
-    @apply bg-light py-2.5 px-6 mb-0 rounded-full;
+    @apply py-2.5 px-6 mb-0 rounded-full;
   }
 
   svg {

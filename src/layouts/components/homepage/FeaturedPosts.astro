@@ -1,7 +1,6 @@
 ---
 import dateFormat from "@/lib/utils/dateFormat";
 import { humanize, slugify } from "@/lib/utils/textConverter";
-import { FaUser } from "react-icons/fa6";
 import ImageMod from "../ImageMod.astro";
 import { getSinglePage } from "@/lib/contentParser.astro";
 import type { CollectionEntry } from "astro:content";
@@ -35,10 +34,6 @@ const posts = await getSinglePage("post");
                       <a href={`/post/${post.id}`}>{post.data.title}</a>
                     </h2>
                     <ul class="post-meta">
-                      <li class="flex justify-center items-center meta-link">
-                        <FaUser className="mr-2" />
-                        <a href={`/author`} set:html={post.data.author} />
-                      </li>
                       {post.data.date && (
                         <li class="meta-link">
                           Date : <span>{dateFormat(post.data.date)}</span>

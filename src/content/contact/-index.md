@@ -1,5 +1,5 @@
 ---
-title: "Talk To Me Anytime :)"
+title: "Hello!"
 meta_title: ""
 description: "this is meta description"
 image: ""
@@ -11,5 +11,5 @@ about:
 
 mail:
   title: "Hate Forms? Write Us Email"
-  address: "info@email.com"
+  address: "dave@kyushudave.com"
 ---

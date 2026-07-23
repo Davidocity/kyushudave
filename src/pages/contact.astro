@@ -29,12 +29,12 @@ const { title, description, meta_title, about } = contact.data;
           <p class="flex items-baseline">
             <FaEnvelopeOpenText className="me-2 text-primary" />
             <a href="mailto:info@email.com" class="underline decoration-dotted"
-              >info@email.com</a
+              >dave@kyushudave.com</a
             >
           </p>
         </div>
         <div class="md:col-6">
-          <form action={contact_form_action} method="POST">
+          <form action="/api/contact" method="POST">
             <div class="mb-6">
               <label for="name" class="form-label">
                 Your Name <span class="text-red-500">*</span>
