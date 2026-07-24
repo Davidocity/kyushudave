@@ -1,16 +1,27 @@
 ---
 import ImageMod from "@/components/ImageMod.astro";
-import Social from "@/components/Social.astro";
 import Base from "@/layouts/Base.astro";
+import SideBar from "@/layouts/components/homepage/SideBar.astro";
 import { getListPage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
 
 const about = await getListPage("about", "-index");
 const buildDrafts = process.argv.includes("--buildDrafts");
-if (!buildDrafts && about.data.draft) return Astro.redirect("/404");
+
+if (!buildDrafts && about.data.draft) {
+  return Astro.redirect("/404");
+}
+
 const { Content } = await render(about);
-const { title, description, meta_title, image, image_caption, social } = about.data;
+
+const {
+  title,
+  description,
+  meta_title,
+  image,
+  image_caption,
+} = about.data;
 ---
 
 <Base
@@ -21,40 +32,55 @@ const { title, description, meta_title, image, image_caption, social } = about.d
 >
   <section class="section-sm">
     <div class="container">
-      <div class="row justify-center">
-        <div class="col-12">
-          <div class="title-bordered mb-5 flex items-center justify-between">
-            <h1 class="h4 fw-normal" set:html={markdownify(title)} />
-            <Social
-              source={social}
-              className="hidden lg:block social-icons me-3"
+      <div class="row">
+        <main class="pswp-gallery lg:col-8">
+          <div
+            class="mb-8 flex items-center justify-between border-b border-border pb-4"
+          >
+            <h1
+              class="h2 mb-0 text-left font-semibold"
+              set:html={markdownify(title)}
             />
           </div>
 
-            {
-              image && (
-                <figure class="mb-6">
+          {
+            image && (
+              <figure class="mb-6">
+                <a
+                  class="block"
+                  href={image}
+                  data-pswp-width="2048"
+                  data-pswp-height="1461"
+                  data-pswp-caption={image_caption || title}
+                  aria-label={`Open larger image: ${title}`}
+                >
                   <ImageMod
-                    class="mx-auto w-full rounded-sm"
+                    class="mx-auto w-full cursor-zoom-in rounded-sm"
                     src={image}
                     width={2048}
                     height={1461}
-                    alt={title}
+                    alt={image_caption || title}
                     format="webp"
                   />
+                </a>
 
-                  {image_caption && (
-                    <figcaption class="mt-2 text-center text-sm italic text-text-light">
-                      {image_caption}
-                    </figcaption>
-                  )}
-                </figure>
-              )
-            }
+                {image_caption && (
+                  <figcaption class="mt-2 text-center text-sm italic text-text-light">
+                    {image_caption}
+                  </figcaption>
+                )}
+              </figure>
+            )
+          }
+
           <div class="content">
             <Content />
           </div>
-        </div>
+        </main>
+
+        <aside class="mt-8 lg:col-4 lg:mt-0">
+          <SideBar />
+        </aside>
       </div>
     </div>
   </section>

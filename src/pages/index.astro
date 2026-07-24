@@ -1,5 +1,4 @@
 ---
-import FeaturedPosts from "@/components/homepage/FeaturedPosts.astro";
 import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
 import Full from "@/layouts/Full.astro";
@@ -23,15 +22,34 @@ const layouts: any = {
   listLeft: ListLeft,
   listRight: ListRight,
 };
-let selectedLayout = config.settings.default_layout;
+
+const selectedLayout = config.settings.default_layout;
 const LayoutComponent = layouts[selectedLayout];
 ---
 
 <Base
-  title="Homepage | KyushuDave"
-  meta_title="This is meta title"
-  description="Kyushu Dave Homepage"
+  title="KyushuDave | Independent Kyushu Travel Guides"
+  meta_title="Kyushu Travel Guides, Food, Culture, and Outdoors"
+  description="Independent travel guides to Kyushu’s cities, food, culture, mountains, and lesser-known places."
 >
-  <FeaturedPosts />
+  <section class="pt-12 pb-18">
+    <div class="container">
+      <div class="max-w-4xl py-1 lg:py-1">
+        <p class="mb-3 text-sm font-semibold uppercase tracking-[0.15em] text-primary">
+          Travel & Photo Journal
+        </p>
+
+        <h1 class="mb-5 text-4xl font-black leading-tight text-text-dark lg:text-5xl">
+          Kyushu, One Place at a Time
+        </h1>
+
+        <p class="max-w-3xl text-lg leading-8 text-text">
+          Exploring Kyushu’s cities, food, culture,
+          mountains, and quieter corners—written by someone who lives here.
+        </p>
+      </div>
+    </div>
+  </section>
+
   {LayoutComponent && <LayoutComponent />}
 </Base>

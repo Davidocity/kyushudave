@@ -12,7 +12,7 @@ const totalPages: number = Math.ceil(posts.length / config.settings.pagination);
 const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 ---
 
-<section class="section">
+<section class="pt-0 pb-16">
   <div class="container">
     <div class="row grid-layout">
       <div class="lg:col-8 mb-5 lg:mb-0">
@@ -30,6 +30,7 @@ const currentPosts = sortedPosts.slice(0, config.settings.pagination);
 
         <Pagination section={false} currentPage={1} totalPages={totalPages} />
       </div>
+
       <div class="lg:col-4">
         <SideBar />
       </div>

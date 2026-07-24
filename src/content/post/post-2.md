@@ -1,5 +1,6 @@
 ---
 title: "Cheerful Loving Couple Bakers Drinking Coffee"
+summary: "This is a placeholder summary text"
 date: 2020-03-14T09:40:24.000Z
 # post thumb
 images:

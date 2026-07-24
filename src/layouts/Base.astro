@@ -1,5 +1,6 @@
 ---
 import TwSizeIndicator from "@/components/TwSizeIndicator.astro";
+import "photoswipe/style.css";
 import config from "@/config/config.json";
 import theme from "@/config/theme.json";
 import { plainify } from "@/lib/utils/textConverter";
@@ -150,20 +151,48 @@ const { title, meta_title, description, image, noindex, canonical } =
       }`}
     />
     <meta name="twitter:card" content="summary_large_image" />
-  </head>
+    </head>
+
   <body>
-    {/* google tag manager noscript */}
+    {/* Google Tag Manager noscript */}
     {
       config.google_tag_manager.enable && (
         <GoogleTagmanagerNoscript id={config.google_tag_manager.gtm_id} />
       )
     }
+
     <TwSizeIndicator />
     <Header />
     <SearchModal client:load />
+
     <main id="main-content">
       <slot />
     </main>
+
     <Footer />
+
+    <script>
+      import PhotoSwipeLightbox from "photoswipe/lightbox";
+
+      let lightbox: PhotoSwipeLightbox | null = null;
+
+      function initializePhotoSwipe() {
+        lightbox?.destroy();
+
+        lightbox = new PhotoSwipeLightbox({
+          gallery: ".pswp-gallery",
+          children: "a[data-pswp-width][data-pswp-height]",
+          pswpModule: () => import("photoswipe"),
+          bgOpacity: 0.9,
+          showHideAnimationType: "zoom",
+        });
+
+        lightbox.init();
+      }
+
+      initializePhotoSwipe();
+
+      document.addEventListener("astro:page-load", initializePhotoSwipe);
+    </script>
   </body>
 </html>

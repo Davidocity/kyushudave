@@ -1,5 +1,6 @@
 ---
 title: "Cheerful Loving Couple Bakers Drinking Coffee"
+summary: "This is a placeholder summary text"
 date: 2020-03-14T15:40:24+06:00
 # post thumb
 images:
@@ -16,6 +17,29 @@ search_keyword: "gethugothemes"
 draft: false
 ---
 abcdefghijklmnopqrstuvwxyz abcdefghijklmnopqrstuvwxyz abcdefghijklm nopqrstuvwxyz
+
+<figure>
+  <a
+    class="block"
+    href="/images/karakuni.jpg"
+    data-pswp-width="2048"
+    data-pswp-height="1365"
+    data-pswp-caption="Kumamoto Castle at sunset"
+  >
+    <img
+      src="/images/karakuni.jpg"
+      alt="Mt Karakuni"
+      width="2048"
+      height="1365"
+      class="w-full rounded-sm cursor-zoom-in"
+      loading="lazy"
+    />
+  </a>
+
+  <figcaption>
+    At the top of Mt. Karakuni
+  </figcaption>
+</figure>
 
 That could be 'my' beautiful soul sitting naked on a couch. If I could just learn to play this stupid thing. I had more, but you go ahead. And when we woke up, we had these bodies. Calculon is gonna kill us and it's all everybody else's fault!
 

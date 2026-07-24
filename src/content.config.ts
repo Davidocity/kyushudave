@@ -29,6 +29,7 @@ const postCollection = defineCollection({
     ...commonFields,
     images: z.array(z.string()).optional(),
     author: z.string().optional(),
+    summary: z.string().optional(),
     categories: z.array(z.string()).optional(),
     tags: z.array(z.string()).optional(),
     type: z.enum(["regular", "featured"]).optional(),

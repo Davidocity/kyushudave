@@ -8,10 +8,10 @@
 }
 
 .navbar-brand {
-  @apply text-xl font-semibold text-text-dark;
-  image {
-    @apply max-h-full max-w-full;
-  }
+  font-size: var(--text-3xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-dark);
+  letter-spacing: -0.02em;
 }
 
 .navbar-nav {
@@ -19,7 +19,7 @@
 }
 
 .nav-link {
-  @apply text-text-dark hover:text-primary block px-4 py-5 font-normal text-[14px] transition;
+  @apply text-text-dark hover:text-primary block px-4 py-5 font-normal text-[17px] transition;
 }
 
 .nav-dropdown {
@@ -35,5 +35,5 @@
 }
 
 .nav-dropdown-link {
-  @apply block py-1 text-[14px] text-text-dark transition hover:text-primary;
+  @apply block py-1 text-[17px] text-text-dark transition hover:text-primary;
 }

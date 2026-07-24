@@ -2,7 +2,6 @@
 import dateFormat from "@/lib/utils/dateFormat";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
-import { FaUser } from "react-icons/fa6";
 import ImageMod from "./components/ImageMod.astro";
 import SideBar from "./components/homepage/SideBar.astro";
 
@@ -15,12 +14,17 @@ const { title, images } = post.data;
 <section class="section pt-7">
   <div class="container">
     <div class="row justify-center">
-      <article class="lg:col-8 mx-auto">
-        <h1 set:html={markdownify(title)} class="h2 font-semibold mb-4" />
+      <article class="pswp-gallery lg:col-8 mx-auto">
+        <h1
+          class="h2 mb-4 font-semibold"
+          set:html={markdownify(title)}
+        />
+
         <ul class="post-meta mb-4">
           <li class="meta-link">
             Date : <span>{dateFormat(post.data.date)}</span>
           </li>
+
           <li class="meta-link">
             Categories :
             {
@@ -31,6 +35,7 @@ const { title, images } = post.data;
               ))
             }
           </li>
+
           <li class="meta-link">
             Tags :
             {
@@ -42,25 +47,36 @@ const { title, images } = post.data;
             }
           </li>
         </ul>
+
         {
-          images && (
-            <div class="mb-10">
-              <ImageMod
-                src={images[0]}
-                height={500}
-                width={1200}
-                alt={title}
-                class="w-full rounded"
-                format="webp"
-              />
-            </div>
+          images && images.length > 0 && (
+            <figure class="mb-10">
+              <a
+                class="block"
+                href={images[0]}
+                data-pswp-width="2048"
+                data-pswp-height="1365"
+                aria-label={`Open larger image: ${title}`}
+              >
+                <ImageMod
+                  src={images[0]}
+                  width={2048}
+                  height={1365}
+                  alt={title}
+                  class="w-full cursor-zoom-in rounded-sm"
+                  format="webp"
+                />
+              </a>
+            </figure>
           )
         }
+
         <div class="content mb-10">
           <Content />
         </div>
       </article>
-      <aside class="lg:col-4 mt-5 lg:mt-0">
+
+      <aside class="mt-5 lg:col-4 lg:mt-0">
         <SideBar />
       </aside>
     </div>
