@@ -5,6 +5,8 @@ import tailwindcss from "@tailwindcss/vite";
 import AutoImport from "astro-auto-import";
 import { defineConfig, fontProviders, sharpImageService } from "astro/config";
 import { unified } from "@astrojs/markdown-remark";
+import remarkAutoPhoto from "./plugins/remark-auto-photo.mjs";
+
 
 import config from "./src/config/config.json";
 import theme from "./src/config/theme.json";
@@ -66,8 +68,9 @@ export default defineConfig({
     : "never",
 
   image: {
-    service: sharpImageService(),
-  },
+  service: sharpImageService(),
+  domains: ["images.kyushudave.com"],
+},
 
   vite: {
     plugins: [tailwindcss()],
@@ -95,7 +98,9 @@ integrations: [
 ],
 
   markdown: {
-    processor: unified(),
+    processor: unified({
+  remarkPlugins: [remarkAutoPhoto],
+}),
 
     shikiConfig: {
       theme: "one-dark-pro",
