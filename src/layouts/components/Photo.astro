@@ -1,0 +1,52 @@
+---
+import ImageMod from "./ImageMod.astro";
+
+interface Props {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  caption,
+  class: className = "",
+} = Astro.props;
+---
+
+<figure class="my-8">
+  <a
+    class="block"
+    href={src}
+    data-pswp-width={width}
+    data-pswp-height={height}
+    data-pswp-caption={caption || alt}
+    aria-label={`Open larger image: ${alt}`}
+  >
+    <ImageMod
+      src={src}
+      width={width}
+      height={height}
+      alt={alt}
+      format="webp"
+      class:list={[
+        "h-auto w-full cursor-zoom-in rounded-sm",
+        className,
+      ]}
+    />
+  </a>
+
+  {
+    caption && (
+      <figcaption class="mt-2 text-center text-sm italic text-text-light">
+        {caption}
+      </figcaption>
+    )
+  }
+</figure>
