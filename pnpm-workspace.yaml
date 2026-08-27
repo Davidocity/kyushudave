@@ -8,7 +8,8 @@ allowBuilds:
 
 minimumReleaseAgeExclude:
   - "@astrojs/mdx@6.0.2"
-  - "astro@6.4.4"
+  - astro@6.4.4 || 7.2.8
   - eslint@10.6.0
   - prettier@3.8.5
   - swiper@14.0.0
+  - sharp@0.35.4
