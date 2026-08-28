@@ -3,10 +3,12 @@ import react from "@astrojs/react";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import AutoImport from "astro-auto-import";
-import { defineConfig, fontProviders, sharpImageService } from "astro/config";
+import {
+  defineConfig,
+  fontProviders,
+  sharpImageService,
+} from "astro/config";
 import { unified } from "@astrojs/markdown-remark";
-import remarkAutoPhoto from "./plugins/remark-auto-photo.mjs";
-
 
 import config from "./src/config/config.json";
 import theme from "./src/config/theme.json";
@@ -68,9 +70,9 @@ export default defineConfig({
     : "never",
 
   image: {
-  service: sharpImageService(),
-  domains: ["images.kyushudave.com"],
-},
+    service: sharpImageService(),
+    domains: ["images.kyushudave.com"],
+  },
 
   vite: {
     plugins: [tailwindcss()],
@@ -78,29 +80,28 @@ export default defineConfig({
 
   fonts: fontsConfig,
 
-integrations: [
-  react(),
-  sitemap(),
+  integrations: [
+    react(),
+    sitemap(),
 
-  AutoImport({
-    imports: [
-      "@/shortcodes/Button",
-      "@/shortcodes/Accordion",
-      "@/shortcodes/Notice",
-      "@/shortcodes/Video",
-      "@/shortcodes/Youtube",
-      "@/shortcodes/Tabs",
-      "@/shortcodes/Tab",
-    ],
-  }),
+    AutoImport({
+      imports: [
+        "@/shortcodes/Button",
+        "@/shortcodes/Accordion",
+        "@/shortcodes/Notice",
+        "@/shortcodes/Video",
+        "@/shortcodes/Youtube",
+        "@/shortcodes/Tabs",
+        "@/shortcodes/Tab",
+        "@/layouts/components/Photo.astro",
+      ],
+    }),
 
-  mdx(),
-],
+    mdx(),
+  ],
 
   markdown: {
-    processor: unified({
-  remarkPlugins: [remarkAutoPhoto],
-}),
+    processor: unified(),
 
     shikiConfig: {
       theme: "one-dark-pro",
