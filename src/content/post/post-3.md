@@ -13,7 +13,7 @@ description: "This is meta description"
 categories: ["videography"]
 tags: ["video", "image"]
 type: "featured" # available type (regular or featured)
-draft: false
+draft: true
 ---
 
 Doomsday device? Ah, now the ball's in Farnsworth's court! Wow! A superpowers drug you can just rub onto your skin? You'd think it would be something you'd have to freebase. Look, last night was a mistake.

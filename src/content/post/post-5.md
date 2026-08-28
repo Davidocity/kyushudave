@@ -13,7 +13,7 @@ description: "This is meta description"
 categories: ["newyork city"]
 tags: ["city", "photo"]
 type: "featured" # available type (regular or featured)
-draft: false
+draft: true
 ---
 
 

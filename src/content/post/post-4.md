@@ -13,7 +13,7 @@ description: "This is meta description"
 categories: ["four seasone"]
 tags: ["seasone", "new"]
 type: "featured" # available type (regular or featured)
-draft: false
+draft: true
 ---
 
 I just told you! You've killed me! Do a flip! I didn't ask for a completely reasonable excuse! I asked you to get busy! It's okay, Bender. I like cooking too. Calculon is gonna kill us and it's all everybody else's fault!
