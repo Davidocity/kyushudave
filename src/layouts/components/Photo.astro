@@ -18,14 +18,19 @@ const {
   caption,
   class: className = "",
 } = Astro.props;
+
+const lightboxWidth = Math.min(width, 2048);
+const lightboxHeight = Math.round((height / width) * lightboxWidth);
+
+const lightboxSrc = `https://kyushudave.com/cdn-cgi/image/width=${lightboxWidth},quality=85,format=auto/${src}`;
 ---
 
 <figure class="my-8">
   <a
     class="block"
-    href={src}
-    data-pswp-width={width}
-    data-pswp-height={height}
+    href={lightboxSrc}
+    data-pswp-width={lightboxWidth}
+    data-pswp-height={lightboxHeight}
     data-pswp-caption={caption || alt}
     aria-label={`Open larger image: ${alt}`}
   >
