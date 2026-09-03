@@ -3,7 +3,7 @@ title: "Hello! I'm Kyushu Dave!"
 meta_title: "About"
 description: "this is meta description."
 email: "dave@kyushudave.com"
-image: "/images/karakuni.jpg"
+image: "https://images.kyushudave.com/about/david-karakuni.jpg"
 image_caption: "Me at the top of Mt. Karakuni overlook Shinmoedaki"
 draft: false
 
