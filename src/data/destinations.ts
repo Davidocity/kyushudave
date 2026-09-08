@@ -3,6 +3,8 @@ export type Destination = {
   name: string;
   prefecture: string;
   description: string;
+  metaTitle?: string;
+  heroImage?: string;
 };
 
 export const destinations = [

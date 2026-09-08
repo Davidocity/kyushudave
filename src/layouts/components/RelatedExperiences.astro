@@ -1,0 +1,87 @@
+---
+import relatedExperiences from "@/lib/utils/relatedExperiences";
+import ImageMod from "./ImageMod.astro";
+
+const {
+  currentPost,
+  allPosts,
+  postsPerExperience = 3,
+} = Astro.props;
+
+const experienceGroups = relatedExperiences(
+  currentPost,
+  allPosts,
+  postsPerExperience,
+);
+---
+
+{experienceGroups.length > 0 && (
+  <section class="mt-12">
+    <h2 class="h4 mb-6 font-semibold">
+      Explore Similar Experiences
+    </h2>
+
+    <div class="space-y-10">
+      {
+        experienceGroups.map((group: any) => (
+          <div>
+            <div class="mb-4">
+              <h3 class="h5 font-semibold">
+                {group.experience.name}
+              </h3>
+
+              {group.experience.description && (
+                <p class="mt-1 text-sm">
+                  {group.experience.description}
+                </p>
+              )}
+            </div>
+
+            <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {
+                group.posts.map((post: any) => {
+                  const {
+                    title,
+                    image,
+                    images = [],
+                  } = post.data;
+
+                  const cardImage =
+                    image || images?.[0];
+
+                  return (
+                    <article>
+                      {cardImage && (
+                        <a
+                          href={`/post/${post.id}/`}
+                          class="mb-3 block"
+                        >
+                          <ImageMod
+                            src={cardImage}
+                            alt={title}
+                            width={600}
+                            height={400}
+                            class="w-full rounded-sm"
+                          />
+                        </a>
+                      )}
+
+                      <h4 class="h6">
+                        <a
+                          href={`/post/${post.id}/`}
+                          class="post-title"
+                        >
+                          {title}
+                        </a>
+                      </h4>
+                    </article>
+                  );
+                })
+              }
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+)}

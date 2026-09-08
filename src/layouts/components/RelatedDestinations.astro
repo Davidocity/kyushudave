@@ -1,0 +1,86 @@
+---
+import similarItems from "@/lib/utils/similarItems";
+import { getDestination } from "@/data/destinations";
+import ImageMod from "./ImageMod.astro";
+
+const {
+  currentPost,
+  allPosts,
+  limit = 3,
+} = Astro.props;
+
+const relatedPosts = similarItems(
+  currentPost,
+  allPosts,
+  limit,
+);
+
+const destinationId =
+  currentPost.data.destination;
+
+const destination = destinationId
+  ? getDestination(destinationId as any)
+  : undefined;
+
+const heading = destination
+  ? `More from ${destination.name}`
+  : "Related Posts";
+---
+
+{relatedPosts.length > 0 && (
+  <section class="mt-12">
+    <h2 class="h4 mb-6 font-semibold">
+      {heading}
+    </h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        relatedPosts.map((post: any) => {
+          const {
+            title,
+            image,
+            images = [],
+            summary,
+          } = post.data;
+
+          const cardImage =
+            image || images?.[0];
+
+          return (
+            <article>
+              {cardImage && (
+                <a
+                  href={`/post/${post.id}/`}
+                  class="block mb-3"
+                >
+                  <ImageMod
+                    src={cardImage}
+                    alt={title}
+                    width={600}
+                    height={400}
+                    class="w-full rounded-sm"
+                  />
+                </a>
+              )}
+
+              <h3 class="h5 mb-2">
+                <a
+                  href={`/post/${post.id}/`}
+                  class="post-title"
+                >
+                  {title}
+                </a>
+              </h3>
+
+              {summary && (
+                <p class="text-sm">
+                  {summary}
+                </p>
+              )}
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+)}

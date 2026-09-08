@@ -1,0 +1,66 @@
+---
+import ImageMod from "./ImageMod.astro";
+
+const {
+  title,
+  posts = [],
+} = Astro.props;
+---
+
+{posts.length > 0 && (
+  <section class="mb-12">
+    <h2 class="h3 mb-6 font-semibold">
+      {title}
+    </h2>
+
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        posts.map((post: any) => {
+          const {
+            title,
+            image,
+            images = [],
+            summary,
+          } = post.data;
+
+          const cardImage =
+            image || images?.[0];
+
+          return (
+            <article>
+              {cardImage && (
+                <a
+                  href={`/post/${post.id}/`}
+                  class="mb-3 block"
+                >
+                  <ImageMod
+                    src={cardImage}
+                    alt={title}
+                    width={600}
+                    height={400}
+                    class="w-full rounded-sm"
+                  />
+                </a>
+              )}
+
+              <h3 class="h5 mb-2">
+                <a
+                  href={`/post/${post.id}/`}
+                  class="post-title"
+                >
+                  {title}
+                </a>
+              </h3>
+
+              {summary && (
+                <p class="text-sm">
+                  {summary}
+                </p>
+              )}
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+)}

@@ -1,0 +1,200 @@
+---
+const {
+  currentPost,
+  allPosts,
+} = Astro.props;
+
+const current = currentPost.data;
+
+/*
+ * Score a planning page according to how geographically
+ * relevant it is to the current article.
+ */
+const scorePost = (post: any) => {
+  const candidate = post.data;
+
+  let score = 0;
+
+  // Same destination is most important
+  if (
+    current.destination &&
+    candidate.destination === current.destination
+  ) {
+    score += 20;
+  }
+
+  // Same area
+  if (
+    current.area &&
+    candidate.area === current.area
+  ) {
+    score += 10;
+  }
+
+  // Same prefecture
+  if (
+    current.prefecture &&
+    candidate.prefecture === current.prefecture
+  ) {
+    score += 8;
+  }
+
+  // Slight preference for featured content
+  if (candidate.type === "featured") {
+    score += 2;
+  }
+
+  return score;
+};
+
+/*
+ * Find the strongest page of a particular content type.
+ */
+const findBestPost = (
+  contentType: string,
+  usedIds: Set<string>,
+) => {
+  const candidates = allPosts
+    .filter((post: any) => {
+      // Never link to the current article
+      if (post.id === currentPost.id) {
+        return false;
+      }
+
+      // Never link to drafts
+      if (post.data.draft) {
+        return false;
+      }
+
+      // Must be the requested type
+      if (post.data.contentType !== contentType) {
+        return false;
+      }
+
+      // Don't reuse a page in multiple cards
+      if (usedIds.has(post.id)) {
+        return false;
+      }
+
+      return true;
+    })
+    .map((post: any) => ({
+      post,
+      score: scorePost(post),
+    }))
+
+    // Require at least some geographic relationship
+    .filter(({ score }: any) => score > 0)
+
+    .sort((a: any, b: any) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      const aDate = a.post.data.date
+        ? new Date(a.post.data.date).getTime()
+        : 0;
+
+      const bDate = b.post.data.date
+        ? new Date(b.post.data.date).getTime()
+        : 0;
+
+      return bDate - aDate;
+    });
+
+  return candidates[0]?.post;
+};
+
+const usedIds = new Set<string>();
+
+const destinationGuide =
+  findBestPost("destination", usedIds);
+
+if (destinationGuide) {
+  usedIds.add(destinationGuide.id);
+}
+
+const itinerary =
+  findBestPost("itinerary", usedIds);
+
+if (itinerary) {
+  usedIds.add(itinerary.id);
+}
+
+const transport =
+  findBestPost("transport", usedIds);
+
+if (transport) {
+  usedIds.add(transport.id);
+}
+
+const accommodation =
+  findBestPost("accommodation", usedIds);
+
+if (accommodation) {
+  usedIds.add(accommodation.id);
+}
+
+const planningItems = [
+  destinationGuide && {
+    label: "Explore the Destination",
+    post: destinationGuide,
+  },
+
+  itinerary && {
+    label: "Plan Your Itinerary",
+    post: itinerary,
+  },
+
+  transport && {
+    label: "Getting Around",
+    post: transport,
+  },
+
+  accommodation && {
+    label: "Where to Stay",
+    post: accommodation,
+  },
+].filter(Boolean);
+---
+
+{planningItems.length > 0 && (
+  <section class="mt-12">
+    <div class="mb-6">
+      <h2 class="h4 mb-2 font-semibold">
+        Continue Planning
+      </h2>
+
+      <p class="text-text-light">
+        Helpful guides for planning the rest of your trip.
+      </p>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      {
+        planningItems.map((item: any) => (
+          <article class="rounded border border-border p-5">
+            <div class="mb-2 text-sm font-semibold text-text-light">
+              {item.label}
+            </div>
+
+            <h3 class="h5 mb-2">
+              <a
+                href={`/post/${item.post.id}/`}
+                class="post-title"
+              >
+                {item.post.data.title}
+              </a>
+            </h3>
+
+            {item.post.data.summary && (
+              <p class="mb-0 text-sm">
+                {item.post.data.summary}
+              </p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </section>
+)}

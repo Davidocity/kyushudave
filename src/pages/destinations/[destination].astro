@@ -1,0 +1,152 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import ImageMod from "@/layouts/components/ImageMod.astro";
+import {
+  destinations,
+  type DestinationId,
+} from "@/data/destinations";
+import DestinationPostSection from "@/layouts/components/DestinationPostSection.astro";
+
+export function getStaticPaths() {
+  return destinations.map((destination) => ({
+    params: {
+      destination: destination.id,
+    },
+    props: {
+      destination,
+    },
+  }));
+}
+
+const { destination } = Astro.props;
+
+const allPosts = await getCollection(
+  "post",
+  ({ data }) => !data.draft,
+);
+
+const destinationPosts = allPosts
+  .filter(
+    (post) =>
+      post.data.destination === destination.id,
+  )
+  .sort((a, b) => {
+    const aDate = a.data.date
+      ? new Date(a.data.date).getTime()
+      : 0;
+
+    const bDate = b.data.date
+      ? new Date(b.data.date).getTime()
+      : 0;
+
+    return bDate - aDate;
+  });
+
+const byType = (type: string) =>
+  destinationPosts.filter(
+    (post) => post.data.contentType === type,
+  );
+
+const attractions = byType("attraction");
+const itineraries = byType("itinerary");
+const transport = byType("transport");
+const accommodation = byType("accommodation");
+const food = byType("food");
+const seasonal = byType("seasonal");
+const planning = byType("planning");
+const experiences = byType("experience");
+
+const destinationGuide =
+  byType("destination")[0];
+
+const pageTitle =
+  destination.metaTitle ||
+  `${destination.name} Travel Guide`;
+
+const description =
+  destination.description;
+---
+
+<Base
+  title={pageTitle}
+  meta_title={pageTitle}
+  description={description}
+>
+  <section class="section-sm">
+    <div class="container">
+
+      <header class="mx-auto mb-10 max-w-3xl">
+        <p class="mb-2 text-sm text-text-light">
+          {destination.prefecture.charAt(0).toUpperCase() +
+            destination.prefecture.slice(1)} Prefecture
+        </p>
+
+        <h1 class="h1 mb-4">
+          {pageTitle}
+        </h1>
+
+        <p class="text-lg">
+          {description}
+        </p>
+
+        {destinationGuide?.data.summary && (
+          <p class="mt-4">
+            {destinationGuide.data.summary}
+          </p>
+        )}
+      </header>
+
+      <div class="mx-auto max-w-5xl">
+
+        <DestinationPostSection
+          title={`Things to Do in ${destination.name}`}
+          posts={attractions}
+        />
+
+        <DestinationPostSection
+          title={`${destination.name} Itineraries`}
+          posts={itineraries}
+        />
+
+        <DestinationPostSection
+          title={`Getting Around ${destination.name}`}
+          posts={transport}
+        />
+
+        <DestinationPostSection
+          title={`Where to Stay in ${destination.name}`}
+          posts={accommodation}
+        />
+
+        <DestinationPostSection
+          title={`Food & Drink in ${destination.name}`}
+          posts={food}
+        />
+
+        <DestinationPostSection
+          title={`Plan Your Trip to ${destination.name}`}
+          posts={planning}
+        />
+
+        <DestinationPostSection
+          title={`When to Visit ${destination.name}`}
+          posts={seasonal}
+        />
+
+        <DestinationPostSection
+          title={`Experiences in ${destination.name}`}
+          posts={experiences}
+        />
+
+      </div>
+    </div>
+  </section>
+</Base>
+
+<!-- Reusable local component -->
+
+{/*
+  Astro doesn't support defining an Astro component here in the
+  same way React does, so we'll create <DestinationPostSection separately.
+*/}
