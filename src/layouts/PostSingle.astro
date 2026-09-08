@@ -4,17 +4,39 @@ import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
 import { render } from "astro:content";
 import ImageMod from "./components/ImageMod.astro";
 import SideBar from "./components/homepage/SideBar.astro";
+import Breadcrumbs from "./components/Breadcrumbs.astro";
 
 const { post } = Astro.props;
 
 const { Content } = await render(post);
-const { title, images } = post.data;
+
+const {
+  title,
+  image,
+  images = [],
+  categories = [],
+  experiences = [],
+  prefecture,
+  destination,
+  area,
+} = post.data;
+
+const featuredImage = image || images?.[0];
 ---
 
 <section class="section pt-7">
   <div class="container">
     <div class="row justify-center">
       <article class="pswp-gallery lg:col-8 mx-auto">
+
+<Breadcrumbs
+  className="mb-5"
+  title={title}
+  prefecture={prefecture}
+  destination={destination}
+  area={area}
+/>
+
         <h1
           class="h2 mb-4 font-semibold"
           set:html={markdownify(title)}
@@ -22,54 +44,62 @@ const { title, images } = post.data;
 
         <ul class="post-meta mb-4">
           <li class="meta-link">
-            Date : <span>{dateFormat(post.data.date)}</span>
+            Date: <span>{dateFormat(post.data.date)}</span>
           </li>
 
-          <li class="meta-link">
-            Categories :
-            {
-              post.data.categories.map((c: string) => (
-                <a href={`/categories/${slugify(c)}`} class="ms-1">
-                  {humanize(c)}
-                </a>
-              ))
-            }
-          </li>
+          {categories.length > 0 && (
+            <li class="meta-link">
+              Categories:
+              {
+                categories.map((c: string) => (
+                  <a
+                    href={`/categories/${slugify(c)}/`}
+                    class="ms-1"
+                  >
+                    {humanize(c)}
+                  </a>
+                ))
+              }
+            </li>
+          )}
 
-          <li class="meta-link">
-            Tags :
-            {
-              post.data.tags.map((t: string) => (
-                <a href={`/tags/${slugify(t)}`} class="ms-1">
-                  {humanize(t)}
-                </a>
-              ))
-            }
-          </li>
+          {experiences.length > 0 && (
+            <li class="meta-link">
+              Experiences:
+              {
+                experiences.map((experience: string) => (
+                  <a
+                    href={`/experiences/${slugify(experience)}/`}
+                    class="ms-1"
+                  >
+                    {humanize(experience)}
+                  </a>
+                ))
+              }
+            </li>
+          )}
         </ul>
 
-        {
-          images && images.length > 0 && (
-            <figure class="mb-10">
-              <a
-                class="block"
-                href={images[0]}
-                data-pswp-width="2048"
-                data-pswp-height="1365"
-                aria-label={`Open larger image: ${title}`}
-              >
-                <ImageMod
-                  src={images[0]}
-                  width={2048}
-                  height={1365}
-                  alt={title}
-                  class="w-full cursor-zoom-in rounded-sm"
-                  format="webp"
-                />
-              </a>
-            </figure>
-          )
-        }
+        {featuredImage && (
+          <figure class="mb-10">
+            <a
+              class="block"
+              href={featuredImage}
+              data-pswp-width="2048"
+              data-pswp-height="1365"
+              aria-label={`Open larger image: ${title}`}
+            >
+              <ImageMod
+                src={featuredImage}
+                width={2048}
+                height={1365}
+                alt={title}
+                class="w-full cursor-zoom-in rounded-sm"
+                format="webp"
+              />
+            </a>
+          </figure>
+        )}
 
         <div class="content mb-10">
           <Content />
