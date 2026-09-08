@@ -1,37 +1,116 @@
-// similar products
-const similarItems = (currentItem: any, allItems: any[]) => {
-  let categories: string[] = [];
-  let tags: string[] = [];
+// Find and rank posts from the same destination.
 
-  // set categories
-  if (currentItem.data.categories.length > 0) {
-    categories = currentItem.data.categories;
+const sharedCount = (
+  first: readonly string[] | undefined,
+  second: readonly string[] | undefined,
+): number => {
+  if (!first || !second) return 0;
+
+  return first.filter((value) => second.includes(value)).length;
+};
+
+const similarItems = (
+  currentItem: any,
+  allItems: any[],
+  limit = 3,
+) => {
+  const current = currentItem.data;
+
+  // If the current article has no destination,
+  // there is no destination-based related section.
+  if (!current.destination) {
+    return [];
   }
 
-  // set tags
-  if (currentItem.data.tags.length > 0) {
-    tags = currentItem.data.tags;
-  }
+  const scoredItems = allItems
+    .filter((item: any) => {
+      // Never include the current article
+      if (item.id === currentItem.id) {
+        return false;
+      }
 
-  // filter by categories
-  const filterByCategories = allItems.filter((item: any) =>
-    categories.find((category) => item.data.categories.includes(category)),
-  );
+      // Never include drafts
+      if (item.data.draft) {
+        return false;
+      }
 
-  // filter by tags
-  const filterByTags = allItems.filter((item: any) =>
-    tags.find((tag) => item.data.tags.includes(tag)),
-  );
+      // Critical rule:
+      // "More from Aso" means ONLY Aso content.
+      if (item.data.destination !== current.destination) {
+        return false;
+      }
 
-  // merged after filter
-  const mergedItems = [...new Set([...filterByCategories, ...filterByTags])];
+      return true;
+    })
 
-  // filter by slug
-  const filterBySlug = mergedItems.filter(
-    (product) => product.id !== currentItem.id,
-  );
+    .map((item: any) => {
+      const candidate = item.data;
 
-  return filterBySlug;
+      let score = 0;
+
+      // Same area gets strongest boost
+      if (
+        current.area &&
+        candidate.area &&
+        current.area === candidate.area
+      ) {
+        score += 10;
+      }
+
+      // Shared experiences
+      score +=
+        sharedCount(
+          current.experiences,
+          candidate.experiences,
+        ) * 3;
+
+      // Shared categories
+      score +=
+        sharedCount(
+          current.categories,
+          candidate.categories,
+        ) * 2;
+
+      // Shared recommended months
+      score +=
+        sharedCount(
+          current.bestMonths,
+          candidate.bestMonths,
+        );
+
+      // Slight preference for featured content
+      if (candidate.type === "featured") {
+        score += 2;
+      }
+
+      return {
+        item,
+        score,
+      };
+    })
+
+    .sort((a, b) => {
+      if (b.score !== a.score) {
+        return b.score - a.score;
+      }
+
+      // Newer article wins ties
+      const aDate = a.item.data.date
+        ? new Date(a.item.data.date).getTime()
+        : 0;
+
+      const bDate = b.item.data.date
+        ? new Date(b.item.data.date).getTime()
+        : 0;
+
+      return bDate - aDate;
+    })
+
+    .slice(0, limit)
+
+    .map(({ item }) => item);
+
+  return scoredItems;
 };
 
 export default similarItems;

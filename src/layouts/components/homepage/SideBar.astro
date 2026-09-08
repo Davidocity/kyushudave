@@ -40,7 +40,7 @@ const tags = await getTaxonomy("post", "tags");
     <h5 class="widget-title"><span>Hi, I'm Kyushu Dave</span></h5>
     <div class="flex justify-start gap-4">
       <ImageMod
-        src="/images/karakuni.jpg"
+        src="https://images.kyushudave.com/about/david-karakuni.jpg"
         alt="author"
         decoding={"auto"}
         class="object-cover rounded-lg max-h-[130px] w-[100px]"
@@ -143,13 +143,20 @@ const tags = await getTaxonomy("post", "tags");
         sortedPosts.slice(0, 3).map((post) => (
           <li class="flex gap-5 widget-list-post items-start">
             <div class="widget-list-post-thumb">
-              <ImageMod
-                width={0}
-                height={0}
-                src={post.data.images[0]}
-                alt={post.data.title}
-                format="webp"
-              />
+      {(() => {
+        const sidebarImage =
+          post.data.image || post.data.images?.[0];
+
+        return sidebarImage ? (
+          <ImageMod
+            width={0}
+            height={0}
+            src={sidebarImage}
+            alt={post.data.title}
+            format="webp"
+          />
+        ) : null;
+      })()}
             </div>
 
             <div class="media-body">

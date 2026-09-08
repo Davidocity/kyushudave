@@ -1,14 +1,18 @@
 ---
 import dateFormat from "@/lib/utils/dateFormat";
 import { humanize, markdownify, slugify } from "@/lib/utils/textConverter";
-import { render } from "astro:content";
+import { getCollection, render } from "astro:content";
 import ImageMod from "./components/ImageMod.astro";
 import SideBar from "./components/homepage/SideBar.astro";
 import Breadcrumbs from "./components/Breadcrumbs.astro";
+import ContinuePlanning from "./components/ContinuePlanning.astro";
+import RelatedDestinations from "./components/RelatedDestinations.astro";
+import RelatedExperiences from "./components/RelatedExperiences.astro";
 
 const { post } = Astro.props;
 
 const { Content } = await render(post);
+const allPosts = await getCollection("post");
 
 const {
   title,
@@ -29,13 +33,13 @@ const featuredImage = image || images?.[0];
     <div class="row justify-center">
       <article class="pswp-gallery lg:col-8 mx-auto">
 
-<Breadcrumbs
-  className="mb-5"
-  title={title}
-  prefecture={prefecture}
-  destination={destination}
-  area={area}
-/>
+        <Breadcrumbs
+          className="mb-5"
+          title={title}
+          prefecture={prefecture}
+          destination={destination}
+          area={area}
+        />
 
         <h1
           class="h2 mb-4 font-semibold"
@@ -103,7 +107,24 @@ const featuredImage = image || images?.[0];
 
         <div class="content mb-10">
           <Content />
-        </div>
+            </div>
+
+            <ContinuePlanning
+              currentPost={post}
+              allPosts={allPosts}
+            />
+
+            <RelatedDestinations
+              currentPost={post}
+              allPosts={allPosts}
+              limit={3}
+            />
+
+            <RelatedExperiences
+              currentPost={post}
+              allPosts={allPosts}
+              postsPerExperience={3}
+            />
       </article>
 
       <aside class="mt-5 lg:col-4 lg:mt-0">

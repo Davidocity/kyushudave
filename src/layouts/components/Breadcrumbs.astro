@@ -43,9 +43,13 @@ const destinationData = destination
     {destinationData && (
       <li class="mx-1" role="listitem">
         <span class="inline-block mr-1" aria-hidden="true">/</span>
-        <span class="text-text-light">
+
+        <a
+          href={`/destinations/${destinationData.id}/`}
+          class="text-primary"
+        >
           {destinationData.name}
-        </span>
+        </a>
       </li>
     )}
 

@@ -18,16 +18,16 @@ const posts = await getSinglePage("post");
           posts.map((post: Post) => (
             <div class="swiper-slide rounded-lg">
               <div class="featured-post">
-                {post.data.images && (
+                {(post.data.image || post.data.images?.[0]) && (
                   <ImageMod
                     class="w-full rounded-lg featured-post-img aspect-video object-cover"
                     height={658}
                     width={1359}
-                    src={post.data.images[0]}
+                    src={post.data.image || post.data.images?.[0]}
                     alt={post.data.title}
                     format="webp"
                   />
-                )}
+        )}
                 <div class="featured-post-overlay">
                   <div class="featured-post-overlay-content">
                     <h2>
